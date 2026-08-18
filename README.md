@@ -8,31 +8,17 @@ I'm working toward a career as a SOC Analyst and wanted hands-on experience beyo
 This repo documents that build end-to-end: architecture, setup, configuration decisions, and the attack/detection walkthrough.
 
 Lab Architecture:
+```mermaid
+graph TD
+    A[Windows Host Machine<br/>VirtualBox Hypervisor]
+    A --> B[Kali Linux<br/>Attacker<br/>192.168.100.20]
+    A --> C[Metasploitable2<br/>Vulnerable Target<br/>192.168.100.10]
+    A --> D[Wazuh<br/>SIEM / Monitor<br/>192.168.100.30]
+    B <-->|Internal Network SOClab<br/>fully isolated| C
+    C <-->|Internal Network SOClab| D
+    D -->|Host-only Adapter<br/>192.168.56.101| E[Wazuh Dashboard<br/>Windows Browser]
+```
 
-                    ┌─────────────────────────────────────┐
-                    │         Windows Host Machine          │
-                    │         (VirtualBox Hypervisor)       │
-                    └─────────────────────────────────────┘
-                                    │
-        ┌───────────────────────────┼───────────────────────────┐
-        │                           │                            │
-
-┌───────▼────────┐        ┌─────────▼─────────┐        ┌────────▼────────┐
-│   Kali Linux    │        │   Metasploitable2  │        │      Wazuh      │
-│   (Attacker)    │◄──────►│  (Vulnerable Target)│◄──────►│  (SIEM/Monitor) │
-│ 192.168.100.20  │        │  192.168.100.10    │        │ 192.168.100.30  │
-└─────────────────┘        └─────────────────────┘        └────────┬────────┘
-        │                                                            │
-        └──────────── Internal Network "SOClab" ────────────────────┘
-                       (fully isolated, no internet)
-
-                                                             Host-only Adapter
-                                                             192.168.56.101
-                                                                    │
-                                                          ┌─────────▼─────────┐
-                                                          │  Wazuh Dashboard   │
-                                                          │  (Windows browser) │
-                                                          └────────────────────┘
 Tools Used:
 Tool	                  Role
 VirtualBox	            Hypervisor running all three VMs
