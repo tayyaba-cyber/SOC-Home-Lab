@@ -8,6 +8,7 @@ I'm working toward a career as a SOC Analyst and wanted hands-on experience beyo
 This repo documents that build end-to-end: architecture, setup, configuration decisions, and the attack/detection walkthrough.
 
 Lab Architecture:
+
                     ┌─────────────────────────────────────┐
                     │         Windows Host Machine          │
                     │         (VirtualBox Hypervisor)       │
