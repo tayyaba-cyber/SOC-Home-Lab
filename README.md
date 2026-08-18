@@ -8,6 +8,31 @@ I'm working toward a career as a SOC Analyst and wanted hands-on experience beyo
 This repo documents that build end-to-end: architecture, setup, configuration decisions, and the attack/detection walkthrough.
 
 Lab Architecture:
+## Lab Architecture
+                ┌─────────────────────────────────────┐
+                │         Windows Host Machine          │
+                │         (VirtualBox Hypervisor)       │
+                └─────────────────────────────────────┘
+                                │
+    ┌───────────────────────────┼───────────────────────────┐
+    │                           │                            │
+
+┌───────▼────────┐ ┌─────────▼─────────┐ ┌────────▼────────┐
+│ Kali Linux │ │ Metasploitable2 │ │ Wazuh │
+│ (Attacker) │◄──────►│ (Vulnerable Target)│◄──────►│ (SIEM/Monitor) │
+│ 192.168.100.20 │ │ 192.168.100.10 │ │ 192.168.100.30 │
+└─────────────────┘ └─────────────────────┘ └────────┬────────┘
+│ │
+└──────────── Internal Network "SOClab" ────────────────────┘
+(fully isolated, no internet)
+
+                                                         Host-only Adapter
+                                                         192.168.56.101
+                                                                │
+                                                      ┌─────────▼─────────┐
+                                                      │  Wazuh Dashboard   │
+                                                      │  (Windows browser) │
+                                                      └────────────────────┘
 
                     ┌─────────────────────────────────────┐
                     │         Windows Host Machine          │
